@@ -11,12 +11,13 @@ pipeline {
     stages {
         stage('Checkout'){
             steps{
-                git credentialsId: '9ef3ad39-805a-4121-b6d1-049f135f3615', url: 'https://gitlab/engineering/automation/create_pass_criteria.git'
+                
                 git branch: 'main', url: 'https://github.com/syl82/maven-test.git'
             }
         }
         stage("sonarqube scan"){
           steps{
+           git credentialsId: '9ef3ad39-805a-4121-b6d1-049f135f3615', url: 'https://github.com/syl82/maven-test.git' 
       withsonarQubeEnv('sonarQube'){
         sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syl82_geolocation1'
       }

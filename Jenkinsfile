@@ -11,6 +11,7 @@ pipeline {
     stages {
         stage('Checkout'){
             steps{
+                git credentialsId: '9ef3ad39-805a-4121-b6d1-049f135f3615', url: 'https://gitlab/engineering/automation/create_pass_criteria.git'
                 git branch: 'main', url: 'https://github.com/syl82/maven-test.git'
             }
         }

@@ -19,7 +19,9 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'sonarqubeID', variable: 'SONAR_TOKEN')]) {
                     withSonarQubeEnv('sonarQube') {
-                        sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syl82_geolocation1'
+                        mask {
+                            sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syl82_geolocation1'
+                        }
                     }
                 }
             }

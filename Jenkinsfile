@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'repository URL'       
+                git branch: 'main', url: 'https://github.com/syl82/maven-test.git'       
             }   
         }
          

@@ -8,7 +8,7 @@ pipeline {
     environment {
         registry = 'registry URL'
         registryCredential = 'credentials ID'
-        dockerImage = '' 
+        dockerimage = '' 
     }
     
     stages {

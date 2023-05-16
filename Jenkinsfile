@@ -1,59 +1,62 @@
-pipeline {
+pipeline {   
     agent any
+    
     tools {
         maven 'M2_HOME'
     }
+    
     environment {
-        registry = '447921315641.dkr.ecr.us-east-1.amazonaws.com/devops-repo'
-        registryCredential = 'aws-credentials'
-        dockerImage = ''
-        SONAR_TOKEN = credentials('sonarqubeID')
+        registry = 'registry URL'
+        registryCredential = 'credentials ID'
+        dockerImage = '' 
     }
+    
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/syl82/maven-test.git'
-            }
+                git branch: 'main', url: 'repository URL'       
+            }   
         }
-        stage("sonarqube scan") {
+         
+        stage("SonarQube Scan") {
             steps {
                 withCredentials([string(credentialsId: 'sonarqubeID', variable: 'SONAR_TOKEN')]) {
                     withSonarQubeEnv('sonarQube') {
-                        
-                     sh 'mvn verify sonar:sonar  \
-               
-                  -Dsonar.projectKey=syl82_geolocation1'     
-                        
-                    }
-                }
+                        sh 'mvn verify sonar:sonar'  
+                    }   
+                }    
             }
-        }
-        stage('Code Build') {
+        }  
+        
+        stage('Build') {
             steps {
                 sh 'mvn clean install package'
-            }
+            }         
         }
+        
         stage('Test') {
-            steps {
+            steps {      
                 sh 'mvn test'
-            }
-        }
+            }              
+        }  
+    
         stage('Build Image') {
-            steps {
+            steps {    
                 script {
-                    dockerImage = docker.build(registry + ":$BUILD_NUMBER")
-                }
-            }
-        }
-        stage('Deploy image') {
-            steps {
+                   dockerImage = docker.build(registry + ":$BUILD_NUMBER")   
+                }    
+            }       
+        }  
+                
+        stage('Deploy Image') {      
+            steps {  
                 script {
-                    docker.withRegistry("https://" + registry, "ecr:us-east-1:" + registryCredential) {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
+                     docker.withRegistry("https://" + registry, registryCredential) {
+                           dockerImage.push()
+                      }
+                 }
+            }     
+        }   
     }
 }
 

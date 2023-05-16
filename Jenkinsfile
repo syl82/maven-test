@@ -21,9 +21,8 @@ pipeline {
                     withSonarQubeEnv('sonarQube') {
                         
                      sh 'mvn verify sonar:sonar  \
-               -Dsonar.projectKey=syl82_geolocation1'
-                  
-     
+               
+                  -Dsonar.projectKey=syl82_geolocation1'     
                         
                     }
                 }

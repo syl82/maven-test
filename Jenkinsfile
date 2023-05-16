@@ -35,16 +35,16 @@ pipeline {
             }         
         }
         
-       
-                
-          
-                         
-         
+        stage('Test') {
+            steps {      
+                sh 'mvn test'
+            }              
+        }  
     
         stage('Build Image') {
             steps {    
                 script {
-                   dockerImage = docker.build(registry + ":$BUILD_NUMBER")   
+                   dockerImage = docker.build("$registry" + ":$BUILD_NUMBER")   
                 }    
             }       
         }  

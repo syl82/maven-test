@@ -22,7 +22,8 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'sonarqubeID', variable: 'SONAR_TOKEN')]) {
                     withSonarQubeEnv('sonarQube') {
-                        sh 'mvn verify sonar:sonar'  
+                        sh 'mvn verify sonar:sonar  -Dsonar.projectKey=syl82_geolocation1'
+                         
                     }   
                 }    
             }

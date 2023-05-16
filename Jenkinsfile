@@ -15,17 +15,17 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/syl82/maven-test.git'
             }
         }
-        #stage("sonarqube scan") {
-         #   steps {
-          #      withCredentials([string(credentialsId: 'sonarqubeID', variable: 'SONAR_TOKEN')]) {
-           #         withSonarQubeEnv('sonarQube') {
-            #            mask {
-             #               sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syl82_geolocation1'
-              #          }
-               #     }
-                #}
-            #}
-        #}
+        stage("sonarqube scan") {
+            steps {
+                withCredentials([string(credentialsId: 'sonarqubeID', variable: 'SONAR_TOKEN')]) {
+                    withSonarQubeEnv('sonarQube') {
+                        
+                            sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=syl82_geolocation1'
+                        
+                    }
+                }
+            }
+        }
         stage('Code Build') {
             steps {
                 sh 'mvn clean install package'
@@ -54,3 +54,5 @@ pipeline {
         }
     }
 }
+
+

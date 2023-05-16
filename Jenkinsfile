@@ -6,8 +6,8 @@ pipeline {
     }
     
     environment {
-        registry = 'registry URL'
-        registryCredential = 'credentials ID'
+        registry = '447921315641.dkr.ecr.us-east-1.amazonaws.com/devops-repo'
+        registryCredential = 'aws-credentials'
         dockerimage = '' 
     }
     
